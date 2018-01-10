@@ -11,6 +11,37 @@ const initialState = {
   slicesPerPerson: 2,
 };
 
+const PizzaCalculator = ({
+  numberOfPeople,
+  slicesPerPerson,
+  numberOfPizzas,
+  updateNumberOfPeople,
+  updateSlicesPerPerson,
+  reset
+}) => (
+  <div className="Application">
+    <Title />
+    <Input
+      label="Number of Guests"
+      type="number"
+      min={0}
+      value={numberOfPeople}
+      onChange={updateNumberOfPeople}
+    />
+    <Input
+      label="Slices Per Person"
+      type="number"
+      min={0}
+      value={slicesPerPerson}
+      onChange={updateSlicesPerPerson}
+    />
+    <Result amount={isNaN(numberOfPizzas) ? 0 : numberOfPizzas} />
+    <button className="full-width" onClick={reset}>
+      Reset
+    </button>
+  </div>
+)
+
 export default class Application extends Component {
   state = { ...initialState };
 
@@ -35,28 +66,17 @@ export default class Application extends Component {
       slicesPerPerson,
     );
 
+    const { updateNumberOfPeople, updateSlicesPerPerson, reset } = this;
+
     return (
-      <div className="Application">
-        <Title />
-        <Input
-          label="Number of Guests"
-          type="number"
-          min={0}
-          value={numberOfPeople}
-          onChange={this.updateNumberOfPeople}
-        />
-        <Input
-          label="Slices Per Person"
-          type="number"
-          min={0}
-          value={slicesPerPerson}
-          onChange={this.updateSlicesPerPerson}
-        />
-        <Result amount={numberOfPizzas} />
-        <button className="full-width" onClick={this.reset}>
-          Reset
-        </button>
-      </div>
+      <PizzaCalculator
+        numberOfPeople={numberOfPeople}
+        slicesPerPerson={slicesPerPerson}
+        numberOfPizzas={numberOfPizzas}
+        updateNumberOfPeople={updateNumberOfPeople}
+        updateSlicesPerPerson={updateSlicesPerPerson}
+        reset={reset}
+      />
     );
   }
 }
