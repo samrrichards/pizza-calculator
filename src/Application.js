@@ -40,7 +40,7 @@ const PizzaCalculator = ({
       Reset
     </button>
   </div>
-)
+);
 
 export default class Application extends Component {
   state = { ...initialState };
