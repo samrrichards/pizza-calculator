@@ -42,41 +42,45 @@ const PizzaCalculator = ({
   </div>
 );
 
-export default class Application extends Component {
-  state = { ...initialState };
+const PizzaContainer = WrappedComponent => class extends Component {
+    state = { ...initialState };
 
-  updateNumberOfPeople = event => {
-    const numberOfPeople = parseInt(event.target.value, 10);
-    this.setState({ numberOfPeople });
-  };
+    updateNumberOfPeople = event => {
+      const numberOfPeople = parseInt(event.target.value, 10);
+      this.setState({ numberOfPeople });
+    };
 
-  updateSlicesPerPerson = event => {
-    const slicesPerPerson = parseInt(event.target.value, 10);
-    this.setState({ slicesPerPerson });
-  };
+    updateSlicesPerPerson = event => {
+      const slicesPerPerson = parseInt(event.target.value, 10);
+      this.setState({ slicesPerPerson });
+    };
 
-  reset = event => {
-    this.setState({ ...initialState });
-  };
+    reset = event => {
+      this.setState({ ...initialState });
+    };
 
-  render() {
-    const { numberOfPeople, slicesPerPerson } = this.state;
-    const numberOfPizzas = calculatePizzasNeeded(
-      numberOfPeople,
-      slicesPerPerson,
-    );
+    render() {
+      const { numberOfPeople, slicesPerPerson } = this.state;
+      const numberOfPizzas = calculatePizzasNeeded(
+        numberOfPeople,
+        slicesPerPerson,
+      );
 
-    const { updateNumberOfPeople, updateSlicesPerPerson, reset } = this;
+      const { updateNumberOfPeople, updateSlicesPerPerson, reset } = this;
 
-    return (
-      <PizzaCalculator
-        numberOfPeople={numberOfPeople}
-        slicesPerPerson={slicesPerPerson}
-        numberOfPizzas={numberOfPizzas}
-        updateNumberOfPeople={updateNumberOfPeople}
-        updateSlicesPerPerson={updateSlicesPerPerson}
-        reset={reset}
-      />
-    );
+      return (
+        <WrappedComponent
+          numberOfPeople={numberOfPeople}
+          slicesPerPerson={slicesPerPerson}
+          numberOfPizzas={numberOfPizzas}
+          updateNumberOfPeople={updateNumberOfPeople}
+          updateSlicesPerPerson={updateSlicesPerPerson}
+          reset={reset}
+        />
+      );
   }
 }
+
+const Application = PizzaContainer(PizzaCalculator);
+
+export default Application; 
